@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import type React from 'react';
+import type React from "react";
 
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Card,
   CardContent,
@@ -13,30 +13,28 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { Library, Mail } from 'lucide-react';
-import { signIn } from 'next-auth/react';
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { Library, Mail } from "lucide-react";
+import { signIn } from "next-auth/react";
 
 export default function LoginPage() {
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
 
     // TODO: Implement login logic using NextAuth.js
-    console.log('Login attempt:', { email, password });
-    alert('Login functionality would be implemented here!');
+    console.log("Login attempt:", { email, password });
+    alert("Login functionality would be implemented here!");
   };
 
-  const handleGoogleLogin = async() => {
+  const handleGoogleLogin = async () => {
     // TODO: Implement Google login logic using NextAuth.js
-   await signIn("google", {
-         callbackUrl: "/",
-       });
-       console.log("Google registration attempt");
-
+    await signIn("google", {
+      callbackUrl: "/",
+    });
   };
 
   return (
@@ -105,7 +103,7 @@ export default function LoginPage() {
           </CardContent>
           <CardFooter>
             <div className="text-center text-sm text-muted-foreground w-full">
-              Don't have an account?{' '}
+              Don't have an account?{" "}
               <Link href="/register" className="text-primary hover:underline">
                 Sign up
               </Link>
