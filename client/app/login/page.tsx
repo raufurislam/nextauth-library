@@ -16,6 +16,7 @@ import {
 } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Library, Mail } from 'lucide-react';
+import { signIn } from 'next-auth/react';
 
 export default function LoginPage() {
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
@@ -29,10 +30,13 @@ export default function LoginPage() {
     alert('Login functionality would be implemented here!');
   };
 
-  const handleGoogleLogin = () => {
+  const handleGoogleLogin = async() => {
     // TODO: Implement Google login logic using NextAuth.js
-    console.log('Google login attempt');
-    alert('Google login would be implemented here!');
+   await signIn("google", {
+         callbackUrl: "/",
+       });
+       console.log("Google registration attempt");
+
   };
 
   return (

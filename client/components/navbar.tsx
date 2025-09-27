@@ -1,8 +1,13 @@
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Library } from 'lucide-react';
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Library } from "lucide-react";
+import { auth } from "@/auth";
+import SignOut from "./sign-out";
 
-export function Navbar() {
+export async function Navbar() {
+  const session = await auth();
+  console.log("Navbar session", session);
+
   return (
     <nav className="border-b border-border bg-card/50 backdrop-blur-sm sticky top-0 z-50">
       <div className="container mx-auto px-4 py-4">
@@ -31,12 +36,21 @@ export function Navbar() {
               Borrow Summary
             </Link>
             <div className="flex items-center space-x-2">
-              <Button variant="outline" size="sm" asChild>
-                <Link href="/login">Log in</Link>
-              </Button>
-              <Button size="sm" asChild>
-                <Link href="/register">Sign up</Link>
-              </Button>
+              {session?.user ? (
+                <>
+                  <span>{session.user.name}</span>
+                  <SignOut />
+                </>
+              ) : (
+                <>
+                  <Button variant="outline" size="sm" asChild>
+                    <Link href="/login">Log in</Link>
+                  </Button>
+                  <Button size="sm" asChild>
+                    <Link href="/register">Sign up</Link>
+                  </Button>
+                </>
+              )}
             </div>
           </div>
         </div>
