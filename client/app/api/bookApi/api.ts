@@ -1,4 +1,4 @@
-import type { Book } from '@/lib/types';
+import type { Book } from "@/lib/types";
 
 const API_URL = process.env.NEXT_PUBLIC_API_URL;
 
@@ -6,7 +6,7 @@ const API_URL = process.env.NEXT_PUBLIC_API_URL;
 export async function getBooks(): Promise<Book[]> {
   try {
     const response = await fetch(`${API_URL}/books`, {
-      cache: 'no-store',
+      cache: "no-store",
     });
 
     if (!response.ok) {
@@ -17,7 +17,7 @@ export async function getBooks(): Promise<Book[]> {
     const data = await response.json();
     return data?.data || [];
   } catch (error) {
-    console.error('Error fetching books:', error);
+    console.error("Error fetching books:", error);
     return [];
   }
 }
@@ -25,7 +25,7 @@ export async function getBooks(): Promise<Book[]> {
 export async function getBookById(bookId: string): Promise<Book | null> {
   try {
     const response = await fetch(`${API_URL}/books/${bookId}`, {
-      cache: 'no-store',
+      cache: "no-store",
     });
 
     if (!response.ok) {
@@ -39,20 +39,20 @@ export async function getBookById(bookId: string): Promise<Book | null> {
     const data = await response.json();
     return data?.data || null;
   } catch (error) {
-    console.error('Error fetching book:', error);
+    console.error("Error fetching book:", error);
     return null;
   }
 }
 
 export async function updateBook(updatedBook: Book): Promise<Book> {
   if (!API_URL) {
-    throw new Error('API URL not configured');
+    throw new Error("API URL not configured");
   }
 
   const response = await fetch(`${API_URL}/books/${updatedBook?._id}`, {
-    method: 'PUT',
+    method: "PUT",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(updatedBook),
   });
@@ -68,11 +68,11 @@ export async function updateBook(updatedBook: Book): Promise<Book> {
 
 export async function deleteBook(bookId: string): Promise<void> {
   if (!API_URL) {
-    throw new Error('API URL not configured');
+    throw new Error("API URL not configured");
   }
 
   const response = await fetch(`${API_URL}/books/${bookId}`, {
-    method: 'DELETE',
+    method: "DELETE",
   });
 
   if (!response.ok) {
@@ -89,13 +89,13 @@ export async function borrowBook(
   dueDate: string
 ): Promise<any> {
   if (!API_URL) {
-    throw new Error('API URL not configured');
+    throw new Error("API URL not configured");
   }
 
   const response = await fetch(`${API_URL}/borrow`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify({
       book: bookId,
@@ -117,11 +117,11 @@ export async function borrowBook(
 export async function getBorrowedBooks(): Promise<any[]> {
   try {
     if (!API_URL) {
-      throw new Error('API URL not configured');
+      throw new Error("API URL not configured");
     }
 
     const response = await fetch(`${API_URL}/borrow`, {
-      cache: 'no-store',
+      cache: "no-store",
       next: { revalidate: 0 },
     });
 
@@ -134,20 +134,20 @@ export async function getBorrowedBooks(): Promise<any[]> {
     const data = await response.json();
     return data?.data || [];
   } catch (error) {
-    console.error('Error fetching borrowed books:', error);
+    console.error("Error fetching borrowed books:", error);
     return [];
   }
 }
 
-export async function createBook(book: Omit<Book, '_id'>): Promise<Book> {
+export async function createBook(book: Omit<Book, "_id">): Promise<Book> {
   if (!API_URL) {
-    throw new Error('API URL not configured');
+    throw new Error("API URL not configured");
   }
 
   const response = await fetch(`${API_URL}/books`, {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
+      "Content-Type": "application/json",
     },
     body: JSON.stringify(book),
   });

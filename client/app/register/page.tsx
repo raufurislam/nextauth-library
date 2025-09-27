@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import type React from 'react';
+import type React from "react";
 
-import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import {
   Card,
   CardContent,
@@ -13,31 +13,35 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { Separator } from '@/components/ui/separator';
-import { Library, Mail } from 'lucide-react';
+} from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
+import { Library, Mail } from "lucide-react";
+import { signIn } from "next-auth/react";
 
 export default function RegisterPage() {
   const handleRegister = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const formData = new FormData(e.currentTarget);
-    const name = formData.get('name') as string;
-    const email = formData.get('email') as string;
-    const password = formData.get('password') as string;
-    const confirmPassword = formData.get('confirmPassword') as string;
+    const name = formData.get("name") as string;
+    const email = formData.get("email") as string;
+    const password = formData.get("password") as string;
+    const confirmPassword = formData.get("confirmPassword") as string;
 
     if (password !== confirmPassword) {
-      alert('Passwords do not match!');
+      alert("Passwords do not match!");
       return;
     }
 
     // TODO: Implement registration logic using NextAuth.js
-    console.log('Registration attempt:', { name, email, password });
+    console.log("Registration attempt:", { name, email, password });
   };
 
-  const handleGoogleRegister = () => {
+  const handleGoogleRegister = async () => {
     // TODO: Implement Google OAuth registration flow using NextAuth.js
-    console.log('Google registration attempt');
+    await signIn("google", {
+      callbackUrl: "/",
+    });
+    console.log("Google registration attempt");
   };
 
   return (
@@ -130,7 +134,7 @@ export default function RegisterPage() {
           </CardContent>
           <CardFooter>
             <div className="text-center text-sm text-muted-foreground w-full">
-              Already have an account?{' '}
+              Already have an account?{" "}
               <Link href="/login" className="text-primary hover:underline">
                 Sign in
               </Link>
